@@ -187,6 +187,14 @@ public class GestureImageView extends ImageView  {
 			measuredWidth -= (getPaddingLeft() + getPaddingRight());
 			measuredHeight -= (getPaddingTop() + getPaddingBottom());
 			
+			float wRatio = (float) imageWidth / (float) measuredWidth;
+            float hRatio = (float) imageHeight / (float) measuredHeight;
+
+            if(wRatio > hRatio) {
+                isLand = true;
+            }else{
+                isLand = false;
+            }
 			computeCropScale(imageWidth, imageHeight, measuredWidth, measuredHeight);
 			
 			if(startingScale <= 0.0f) {
@@ -282,6 +290,8 @@ public class GestureImageView extends ImageView  {
 		}
 	}
 
+	private boolean isLand;
+	
 	protected boolean isRecycled() {
 		if(drawable != null && drawable instanceof BitmapDrawable) {
 			Bitmap bitmap = ((BitmapDrawable)drawable).getBitmap();
@@ -679,11 +689,16 @@ public class GestureImageView extends ImageView  {
 	}
 	
 	public boolean isLandscape() {
-		return getImageWidth() >= getImageHeight();
+//		return getImageWidth() >= getImageHeight();
+		
+//		return true;
+	    return isLand;
 	}
 	
 	public boolean isPortrait() {
-		return getImageWidth() <= getImageHeight();
+//		return getImageWidth() <= getImageHeight();
+//		return false;
+	    return !isLand;
 	}
 	
 	public void setStartingScale(float startingScale) {

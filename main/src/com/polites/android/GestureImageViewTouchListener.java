@@ -80,6 +80,7 @@ public class GestureImageViewTouchListener implements OnTouchListener {
 	private GestureDetector tapDetector;
 	private GestureDetector flingDetector;
 	private GestureImageViewListener imageListener;
+	private boolean hasdoScaled = false;
 
 	public GestureImageViewTouchListener(final GestureImageView image, int displayWidth, int displayHeight) {
 		super();
@@ -373,7 +374,7 @@ public class GestureImageViewTouchListener implements OnTouchListener {
 		boundCoordinates();
 		
 		if(!canDragX && !canDragY) {
-			
+		    if(hasdoScaled){
 			if(image.isLandscape()) {
 				currentScale = fitScaleHorizontal;
 				lastScale = fitScaleHorizontal;
@@ -381,6 +382,8 @@ public class GestureImageViewTouchListener implements OnTouchListener {
 			else {
 				currentScale = fitScaleVertical;
 				lastScale = fitScaleVertical;
+		        }	
+		        hasdoScaled = false;
 			}			
 		}
 
@@ -419,7 +422,7 @@ public class GestureImageViewTouchListener implements OnTouchListener {
 			imageListener.onScale(currentScale);
 			imageListener.onPosition(next.x, next.y);
 		}
-		
+		hasdoScaled = true;
 		image.redraw();
 	}
 	
